@@ -1,14 +1,85 @@
--- Create workouts table
+-- Create workouts table (reference/template table)
 CREATE TABLE IF NOT EXISTS workouts (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    duration_minutes INT NOT NULL,
-    calories_burned INT,
+    category VARCHAR(50) NOT NULL,  -- e.g., strength, cardio, flexibility
     logged_at TIMESTAMP DEFAULT NOW()
 );
 
--- Insert some sample data
-INSERT INTO workouts (name, duration_minutes, calories_burned)
+-- Insert sample workouts (these are reference workouts)
+INSERT INTO workouts (name, category)
 VALUES
-('Morning Run', 30, 250),
-('Evening Yoga', 45, 150);
+('Push Ups', 'calisthenics'),
+('Squats', 'calisthenics'),
+('Deadlift', 'strength'),
+('Bench Press', 'strength'),
+('Pull Ups', 'calisthenics'),
+('Overhead Press', 'strength'),
+('Barbell Row', 'strength'),
+('Dumbbell Curl', 'strength'),
+('Tricep Dip', 'calisthenics'),
+('Lateral Raise', 'strength'),
+('Chest Fly', 'strength'),
+('Incline Bench Press', 'strength'),
+('Decline Bench Press', 'strength'),
+('Front Squat', 'strength'),
+('Bulgarian Split Squat', 'strength'),
+('Romanian Deadlift', 'strength'),
+('Hip Thrust', 'strength'),
+('Calf Raise', 'strength'),
+('Hammer Curl', 'strength'),
+('Skullcrusher', 'strength'),
+('Face Pull', 'strength'),
+('Lat Pulldown', 'strength'),
+('Seated Row', 'strength'),
+('Leg Press', 'strength'),
+('Leg Extension', 'strength'),
+('Leg Curl', 'strength'),
+('Glute Bridge', 'strength'),
+('Farmer\'s Walk', 'strength'),
+('Arnold Press', 'strength'),
+('Reverse Lunge', 'strength'),
+('Chin Up', 'strength'),
+('Good Morning', 'strength'),
+('Sumo Deadlift', 'strength'),
+('Power Clean', 'strength'),
+('Clean and Jerk', 'strength'),
+('Snatch', 'strength'),
+('Zercher Squat', 'strength'),
+('Pendlay Row', 'strength'),
+('Cable Fly', 'strength'),
+('Cable Curl', 'strength'),
+('Preacher Curl', 'strength'),
+('Concentration Curl', 'strength'),
+('Incline Dumbbell Curl', 'strength'),
+('Close Grip Bench Press', 'strength'),
+('Diamond Push Ups', 'calisthenics'),
+('Wide Grip Pull Up', 'calisthenics'),
+('Single Arm Row', 'strength'),
+('Goblet Squat', 'calisthenics'),
+('Landmine Press', 'strength'),
+('Trap Bar Deadlift', 'strength'),
+('Reverse Fly', 'strength'),
+('Rear Delt Row', 'strength'),
+('Sissy Squat', 'strength'),
+('Nordic Hamstring Curl', 'strength'),
+('Weighted Dip', 'strength'),
+('Weighted Pull Up', 'strength'),
+('Pistol Squat', 'calisthenics'),
+('Jefferson Deadlift', 'strength'),
+('Hack Squat', 'strength'),
+('Smith Machine Squat', 'strength'),
+('Machine Chest Press', 'strength'),
+('Machine Shoulder Press', 'strength'),
+('Machine Row', 'strength'),
+('Machine Leg Press', 'strength')
+
+-- Create user_workouts table for actual user workout logs
+CREATE TABLE IF NOT EXISTS user_workouts (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    sets INT NOT NULL,
+    reps INT NOT NULL,
+    weight DECIMAL(5,2),  -- weight in lbs/kg (can be null for bodyweight exercises)
+    logged_at TIMESTAMP DEFAULT NOW()
+);

@@ -23,13 +23,13 @@ app.get("/", (req, res) => {
   res.json({ message: "Backend running!" });
 });
 
-// Add exercise log
-app.post("/api/exercises", async (req, res) => {
-  const { exerciseName, sets, reps, weight } = req.body;
+// Add workout log
+app.post("/api/workouts", async (req, res) => {
+  const { name, sets, reps, weight } = req.body;
   try {
     await pool.query(
-      "INSERT INTO workouts (exercise_name, sets, reps, weight) VALUES ($1, $2, $3, $4)",
-      [exerciseName, sets, reps, weight]
+      "INSERT INTO user_workouts (name, sets, reps, weight) VALUES ($1, $2, $3, $4)",
+      [name, sets, reps, weight]
     );
     res.json({ message: "Workout logged!" });
   } catch (err) {
@@ -38,10 +38,21 @@ app.post("/api/exercises", async (req, res) => {
   }
 });
 
-// Get logs
-app.get("/api/exercises", async (req, res) => {
+// Get user workouts (logged workouts)
+app.get("/api/workouts", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM workouts ORDER BY logged_at DESC");
+    const result = await pool.query("SELECT * FROM user_workouts ORDER BY logged_at DESC");
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Database error" });
+  }
+});
+
+// Get reference workouts (for dropdown selection)
+app.get("/api/reference-workouts", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM workouts ORDER BY name");
     res.json(result.rows);
   } catch (err) {
     console.error(err);
